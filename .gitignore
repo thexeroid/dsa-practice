@@ -1,0 +1,7 @@
+# compiled binaries
+*.out
+*.o
+bin/
+build/
+.cache/
+compile_commands.json

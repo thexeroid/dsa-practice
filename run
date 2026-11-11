@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Compile and run a solution: ./run problems/foo.cpp [< input]
+set -e
+mkdir -p bin
+out="bin/$(basename "${1%.cpp}")"
+g++ -std=c++20 -O2 -Wall -Wextra -Wshadow -fsanitize=address,undefined -o "$out" "$1"
+"$out"
