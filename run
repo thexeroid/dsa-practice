@@ -3,5 +3,10 @@
 set -e
 mkdir -p bin
 out="bin/$(basename "${1%.cpp}")"
-g++ -std=c++20 -O2 -Wall -Wextra -Wshadow -fsanitize=address,undefined -o "$out" "$1"
+flags=(-std=c++20 -O2 -Wall -Wextra -Wshadow -D_GLIBCXX_ASSERTIONS)
+# Memory-bug checks if installed (sudo dnf install libasan libubsan)
+if echo 'int main(){}' | g++ -x c++ -fsanitize=address,undefined -o /dev/null - 2>/dev/null; then
+  flags+=(-fsanitize=address,undefined)
+fi
+g++ "${flags[@]}" -o "$out" "$1"
 "$out"
