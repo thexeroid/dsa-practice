@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# New problem from the template: ./new <name> [url]
+set -e
+f="problems/$1.cpp"
+[ -e "$f" ] && { echo "exists: $f"; exit 1; }
+sed "s|__URL__|${2:-}|" templates/base.cpp > "$f"
+mkdir -p tests && : > "tests/$1.in"
+echo "created $f and tests/$1.in"
